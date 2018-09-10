@@ -21,6 +21,7 @@ public class PartyTest {
         fancyText(user.getName()); //Spaced out text greeting
     }
 
+    
     //Returns the information (name)
     private static void normalMessage(Party name) {
 
