@@ -1,0 +1,17 @@
+10/09/18
+- P1 complete: Added a main method along with two other methods (normalMessage and fancyText)
+- Also added a class (Party) that contains the user field name - I instantiate this class in the main program
+- normalMessage() prints a message using the user provided field
+- fancyText() prints a message using more advanced String manipulation
+- All this program does atm 1)Ask for the user's name and 2) Tell the user it's time to party
+
+* Personal Project Goal
+- Making a full fledged meet up application which I can later integrate onto mobile devices
+- Users can post, find and organize events through the application and set lists where other users can attend
+- Organizers can set capacity caps, funding, and acceptances/rejections
+- Users can choose to attend events (RSVP) and organize "crews" (group of people who can communicate before the event and can organize meetups)
+- Users and Organizers can both create "Shopping lists" (list of products, services and items that they will want to bring to the party)
+- More on shopping lists - The owner can set access permissions and can allow crew to edit (bring stuff - checks off)
+- Shopping lists can also suggest the best places to find what is required (Maps API)
+- Set your own limits (geographical, times, age, dates, themes etc.) Organizers can do the same
+- Possible PayPal integration allowing for easier movements during paid events - Goal is to have no wait and all party!
