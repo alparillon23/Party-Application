@@ -1,3 +1,10 @@
+13/09/18
+- P2 begins
+- Already accomplished a lot of what I needed to do for this deliverable in P1
+- Will do the call graphs and the flowchart over the weekend
+-
+
+
 10/09/18
 - P1 complete: Added a main method along with two other methods (normalMessage and fancyText)
 - Also added a class (Party) that contains the user field name - I instantiate this class in the main program
