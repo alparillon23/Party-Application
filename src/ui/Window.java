@@ -32,6 +32,7 @@ public class Window extends JFrame {
         textPane.setLayout(box);
 
 
+
         JLabel greeting = new JLabel("<html> <font color='purple' size = 50>WELCOME TO <i>PARTY</i></font><br>" +
                 "<font color='purple' size = 5>Name:</font></html>");
         JTextField name = new JTextField(20);
@@ -45,7 +46,9 @@ public class Window extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String nam = name.getText();
-                salut.setText("Message From Owner: Hi "+ nam +", thanks for downloading the app. More cool stuff coming soon!");
+                Party user = new Party(nam);
+                salut.setText("Message From Owner: Hi "+ nam +", thanks for downloading the app. More cool stuff coming soon! " + user.fancyText());
+                
             }
         });
 
