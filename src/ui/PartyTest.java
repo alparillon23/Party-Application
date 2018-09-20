@@ -7,6 +7,14 @@ public class PartyTest {
 
 
     public static void main(String[] args) {
+
+        //Deliverable 2 uses JFrame. last week's code is commented out unless I need it for the next steps
+
+        Window boss = new Window();
+
+
+
+        /*
         //accepts users input in console
         Scanner input = new Scanner(System.in);
 
@@ -19,9 +27,10 @@ public class PartyTest {
         // and               2. Passing the objects field as an argument
         normalMessage(user);
         fancyText(user.getName()); //Spaced out text greeting
+        */
     }
 
-
+/*
     //Returns the information (name)
     private static void normalMessage(Party name) {
 
@@ -40,5 +49,5 @@ public class PartyTest {
         System.out.println("! ! !");
 
     }
-
+*/
 }

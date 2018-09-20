@@ -1,8 +1,14 @@
+20/09/18
+- Completed P2
+- Began introducing a user interface (currently limited to name)
+- Outputs message thanking user
+
+
 13/09/18
 - P2 begins
 - Already accomplished a lot of what I needed to do for this deliverable in P1
 - Will do the call graphs and the flowchart over the weekend
--
+
 
 
 10/09/18
