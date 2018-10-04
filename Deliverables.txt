@@ -1,3 +1,8 @@
+04/10/18
+- Completed P4
+- Tests Removed in preference with UI
+- Abstraction used for Windows and Save and Load Features (used Parallel txt boxes for simplicity)
+
 20/09/18
 - Completed P2
 - Began introducing a user interface (currently limited to name)
