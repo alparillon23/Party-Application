@@ -1,5 +1,9 @@
 package info;
 
+import exceptions.PasswordDoesNotMatchException;
+import exceptions.SignInSuccessfulException;
+import exceptions.UserDoesNotExistException;
+
 import java.io.*;
 
 public class SignIn extends SaveAndLoad{
@@ -9,20 +13,21 @@ public class SignIn extends SaveAndLoad{
         super();
     }
 
-    public int signIn(String user, String pass)
+    public void signIn(String user, String pass)
+            throws UserDoesNotExistException, SignInSuccessfulException, PasswordDoesNotMatchException
     {
         if (nameList.equals(null))
         {
-            return 0;
+            throw new UserDoesNotExistException();
         }
         else {
             if (nameList.contains(user)) {
                 if (passwordList.get(nameList.indexOf(user)).equals(pass)) {
-                    return 2; //Good Match Dialog
+                    throw new SignInSuccessfulException();
                 } else {
-                    return 1; //Incorrect Password Dialog
+                    throw new PasswordDoesNotMatchException();
                 }
-            } else return 0; //User doesn't exist
+            } else throw new UserDoesNotExistException();
         }
     }
 }

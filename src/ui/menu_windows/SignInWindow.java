@@ -1,7 +1,10 @@
-package ui;
+package ui.menu_windows;
 
+import exceptions.*;
 import info.SignIn;
 import info.SignUp;
+import ui.Window;
+import ui.message_windows.LoginSuccessWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +17,7 @@ public class SignInWindow extends Window {
     public SignInWindow()
     {
 
-        super("Party Sign-In",new ImageIcon ("src/ui/partyicon.png"));
+        super("Party Sign-In",new ImageIcon ("src/ui/partyicon.png"),null);
     }
 
     public void setPanel()
@@ -58,7 +61,7 @@ public class SignInWindow extends Window {
         c.gridwidth = 4;
         nameAndPass.add(labelPass,c);
 
-        JTextField pass = new JTextField(20);
+        JTextField pass = new  JPasswordField(20);
         pass.setMaximumSize(new Dimension(200,10));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 4;
@@ -87,17 +90,22 @@ public class SignInWindow extends Window {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SignIn s = new SignIn();
-                switch(s.signIn(name.getText(),pass.getText()))
-                {
-                    case 2:
-                        JOptionPane.showMessageDialog(new JPanel(),"Welcome "+name.getText()+"\nThanks for Partying with Us", "Login Successful",JOptionPane.INFORMATION_MESSAGE);
-                        break;
-                    case 1:
-                        JOptionPane.showMessageDialog(new JPanel(),"Password is incorrect for "+name.getText(),"Login Not Successful", JOptionPane.ERROR_MESSAGE);
-                        break;
-                        default:
-                            JOptionPane.showMessageDialog(new JPanel(), name.getText()+" does not exist", "User does not exist",JOptionPane.WARNING_MESSAGE);
+                try {
+                    s.signIn(name.getText(), pass.getText());
+                } catch (PasswordDoesNotMatchException e1) {
+                    JOptionPane.showMessageDialog(new JPanel(),"Password is incorrect for "+name.getText(),"Login Not Successful", JOptionPane.ERROR_MESSAGE);
+                } catch (UserDoesNotExistException e1) {
+                    JOptionPane.showMessageDialog(new JPanel(), name.getText()+" does not exist", "User does not exist",JOptionPane.WARNING_MESSAGE);
+                } catch (SignInSuccessfulException e1) {
+                    SignInWindow.super.closeWindow();
+                    start.setVisible(false);
+                    new LoginSuccessWindow(name.getText());
                 }
+                finally {
+                    name.setText("");
+                    pass.setText("");
+                }
+
             }
         });
         //Effect: Reads data from the field name and provides it in a message
@@ -105,17 +113,22 @@ public class SignInWindow extends Window {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SignUp s = new SignUp();
-                switch(s.signUp(name.getText(),pass.getText()))
+                try
                 {
-                    case 0:
-                        JOptionPane.showMessageDialog(new JPanel(),name.getText()+" already exists. Sign In!","Sign Up Not Successful", JOptionPane.ERROR_MESSAGE);
-                        break;
-                    case 1:
-                        JOptionPane.showMessageDialog(new JPanel(),"Welcome to the Party "+name.getText(), "Sign Up Successful",JOptionPane.INFORMATION_MESSAGE);
-                        break;
-                    default:
-                        JOptionPane.showMessageDialog(new JPanel(), "Whoops! An error occurred, try again", "Error",JOptionPane.ERROR_MESSAGE);
+                s.signUp(name.getText(),pass.getText());
+                } catch (SignUpSuccessfulException e1) {
+                    JOptionPane.showMessageDialog(new JPanel(),"Welcome to the Party "+name.getText(), "Sign Up Successful",JOptionPane.INFORMATION_MESSAGE);
+                } catch (UserAlreadyExistsException e1) {
+                    JOptionPane.showMessageDialog(new JPanel(),name.getText()+" already exists. Sign In!","Sign Up Not Successful", JOptionPane.ERROR_MESSAGE);
+                } catch (GenericException e1) {
+                    JOptionPane.showMessageDialog(new JPanel(), "Whoops! An error occurred, try again\nERROR: "+e1.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);
                 }
+                finally
+                {
+                    name.setText("");
+                    pass.setText("");
+                }
+
             }
         });
 

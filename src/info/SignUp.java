@@ -1,9 +1,10 @@
 package info;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import exceptions.GenericException;
+import exceptions.SignUpSuccessfulException;
+import exceptions.UserAlreadyExistsException;
+
+import java.io.*;
 
 public class SignUp extends SaveAndLoad {
 
@@ -12,7 +13,7 @@ public class SignUp extends SaveAndLoad {
         super();
     }
 
-    public int signUp(String name, String pass)
+    public void signUp(String name, String pass) throws SignUpSuccessfulException, GenericException, UserAlreadyExistsException
     {
         try
         {
@@ -26,17 +27,17 @@ public class SignUp extends SaveAndLoad {
                 passwordList.add(pass);
                 out_name.flush();
                 out_pass.flush();
-                return 1;
+                throw new SignUpSuccessfulException();
 
             }
             else
-                return 0;
+                throw new UserAlreadyExistsException();
 
         }
-        catch (Exception e)
+        catch (IOException e)
         {
                 System.out.print(e.getMessage());
-                return 2;
+                throw new GenericException();
         }
     }
 }

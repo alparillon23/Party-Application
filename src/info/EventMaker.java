@@ -13,7 +13,7 @@ public abstract class EventMaker {
     protected BufferedReader in_events;
     protected PrintWriter out_eventRec;
 
-
+    //MODIFIES: this
     public EventMaker(int id) //Deals only with User defined Events
     {
         userId = id;
@@ -45,6 +45,8 @@ public abstract class EventMaker {
 
     }
 
+    //MODIFIES: this, eventRecords.txt
+    //EFFECTS: Adds an Event to the List
     public void addEvent(int userID, String name, String location, String date, String time)
     {
 
@@ -63,7 +65,8 @@ public abstract class EventMaker {
        }
     }
 
-    private int getNewID(BufferedReader in_events) throws IOException {
+    //EFFECTS: Returns a New ID for Event
+    private int getNewID(BufferedReader in_events) throws IOException {//Returns a unique ID that will be used in implementations
         Random rn = new Random();
         ArrayList<Integer> ListOfIDs = new ArrayList<>();
         String line = "";
@@ -71,15 +74,16 @@ public abstract class EventMaker {
             String[] splitLine = line.split(",");
             ListOfIDs.add(Integer.parseInt(splitLine[0]));
         }
-        int value = rn.nextInt();
+        int value = rn.nextInt(10000);
         while(ListOfIDs.contains(value))
                 value = rn.nextInt();
         in_events.close();
         return value;
     }
 
-
-    public void removeEvent(int eventID, int userID) //Complete this implementation
+    //MODIFIES: this, eventsRecords.txt
+    //EFFECT: removes event from list
+    public void removeEvent(int eventID, int userID)
     {
         for(Event e: list)
         {
@@ -136,37 +140,7 @@ public abstract class EventMaker {
                 e.setName(name);
                 try
                 {
-                    eventRecords = new File("src/info/eventFile/EventsRecords.txt");
-                    File temp = new File ("src/info/eventFile/temp.txt");
-                    PrintWriter out_temp = new PrintWriter(new FileOutputStream(temp,true));
-                    out_eventRec = new PrintWriter(new FileOutputStream(eventRecords,false));
-                    String line = "";
-                    String temp_read = "";
-                    in_events = new BufferedReader(new FileReader(eventRecords));
-                    BufferedReader in_temp = new BufferedReader(new FileReader(temp));
-                    while ((line = in_events.readLine()) != null)
-                    {
-                        //find the line that we want to change
-                        String[] splitLine = line.split(",");
-                        if((Integer.parseInt(splitLine[0])==eventID)&&(Integer.parseInt(splitLine[1])==userID))
-                        {
-
-                        }
-                        else
-                        {
-                            out_temp.append(line+"\n");
-                        }
-
-                    }
-                    out_temp.append(e.getId()+","+e.getPersonId()+","+e.getName()+","+e.getLocation()+","+e.getDate()+","+e.getTime());
-                    out_temp.flush();
-                    while ((line = in_temp.readLine()) != null)
-                    {
-                        temp_read += (line + "\n");
-                    }
-                    out_eventRec.write(temp_read);
-                    out_eventRec.flush();
-                    in_events.close();
+                    setEventRecords(eventID,userID,e);
                 }
                 catch(IOException er)
                 {
@@ -185,37 +159,7 @@ public abstract class EventMaker {
                 e.setLocation(location);
                 try
                 {
-                    eventRecords = new File("src/info/eventFile/EventsRecords.txt");
-                    File temp = new File ("src/info/eventFile/temp.txt");
-                    PrintWriter out_temp = new PrintWriter(new FileOutputStream(temp,true));
-                    out_eventRec = new PrintWriter(new FileOutputStream(eventRecords,false));
-                    String line = "";
-                    String temp_read = "";
-                    in_events = new BufferedReader(new FileReader(eventRecords));
-                    BufferedReader in_temp = new BufferedReader(new FileReader(temp));
-                    while ((line = in_events.readLine()) != null)
-                    {
-                        //find the line that we want to change
-                        String[] splitLine = line.split(",");
-                        if((Integer.parseInt(splitLine[0])==eventID)&&(Integer.parseInt(splitLine[1])==userID))
-                        {
-
-                        }
-                        else
-                        {
-                            out_temp.append(line+"\n");
-                        }
-
-                    }
-                    out_temp.append(e.getId()+","+e.getPersonId()+","+e.getName()+","+e.getLocation()+","+e.getDate()+","+e.getTime());
-                    out_temp.flush();
-                    while ((line = in_temp.readLine()) != null)
-                    {
-                        temp_read += (line + "\n");
-                    }
-                    out_eventRec.write(temp_read);
-                    out_eventRec.flush();
-                    in_events.close();
+                    setEventRecords(eventID,userID,e);
                 }
                 catch(IOException er)
                 {
@@ -234,37 +178,7 @@ public abstract class EventMaker {
                 e.setDate(date);
                 try
                 {
-                    eventRecords = new File("src/info/eventFile/EventsRecords.txt");
-                    File temp = new File ("src/info/eventFile/temp.txt");
-                    PrintWriter out_temp = new PrintWriter(new FileOutputStream(temp,true));
-                    out_eventRec = new PrintWriter(new FileOutputStream(eventRecords,false));
-                    String line = "";
-                    String temp_read = "";
-                    in_events = new BufferedReader(new FileReader(eventRecords));
-                    BufferedReader in_temp = new BufferedReader(new FileReader(temp));
-                    while ((line = in_events.readLine()) != null)
-                    {
-                        //find the line that we want to change
-                        String[] splitLine = line.split(",");
-                        if((Integer.parseInt(splitLine[0])==eventID)&&(Integer.parseInt(splitLine[1])==userID))
-                        {
-
-                        }
-                        else
-                        {
-                            out_temp.append(line+"\n");
-                        }
-
-                    }
-                    out_temp.append(e.getId()+","+e.getPersonId()+","+e.getName()+","+e.getLocation()+","+e.getDate()+","+e.getTime());
-                    out_temp.flush();
-                    while ((line = in_temp.readLine()) != null)
-                    {
-                        temp_read += (line + "\n");
-                    }
-                    out_eventRec.write(temp_read);
-                    out_eventRec.flush();
-                    in_events.close();
+                    setEventRecords(eventID,userID,e);
                 }
                 catch(IOException er)
                 {
@@ -283,46 +197,51 @@ public abstract class EventMaker {
                 e.setTime(time);
                 try
                 {
-                    eventRecords = new File("src/info/eventFile/EventsRecords.txt");
-                    File temp = new File ("src/info/eventFile/temp.txt");
-                    PrintWriter out_temp = new PrintWriter(new FileOutputStream(temp,true));
-                    out_eventRec = new PrintWriter(new FileOutputStream(eventRecords,false));
-                    String line = "";
-                    String temp_read = "";
-                    in_events = new BufferedReader(new FileReader(eventRecords));
-                    BufferedReader in_temp = new BufferedReader(new FileReader(temp));
-                    while ((line = in_events.readLine()) != null)
-                    {
-                        //find the line that we want to change
-                        String[] splitLine = line.split(",");
-                        if((Integer.parseInt(splitLine[0])==eventID)&&(Integer.parseInt(splitLine[1])==userID))
-                        {
-
-                        }
-                        else
-                        {
-                            out_temp.append(line+"\n");
-                        }
-
-                    }
-                    out_temp.append(e.getId()+","+e.getPersonId()+","+e.getName()+","+e.getLocation()+","+e.getDate()+","+e.getTime());
-                    out_temp.flush();
-                    while ((line = in_temp.readLine()) != null)
-                    {
-                        temp_read += (line + "\n");
-                    }
-                    out_eventRec.write(temp_read);
-                    out_eventRec.flush();
-                    in_events.close();
+                   setEventRecords(eventID,userID,e);
                 }
                 catch(IOException er)
                 {
                     System.out.println(er.getMessage());
                 }
+
             }
         }
     }
 
+    public void setEventRecords(int eventID, int userID, Event e) throws IOException
+    {
+        eventRecords = new File("src/info/eventFile/EventsRecords.txt");
+        File temp = new File ("src/info/eventFile/temp.txt");
+        PrintWriter out_temp = new PrintWriter(new FileOutputStream(temp,true));
+        out_eventRec = new PrintWriter(new FileOutputStream(eventRecords,false));
+        String line = "";
+        String temp_read = "";
+        in_events = new BufferedReader(new FileReader(eventRecords));
+        BufferedReader in_temp = new BufferedReader(new FileReader(temp));
+        while ((line = in_events.readLine()) != null)
+        {
+            //find the line that we want to change
+            String[] splitLine = line.split(",");
+            if((Integer.parseInt(splitLine[0])==eventID)&&(Integer.parseInt(splitLine[1])==userID))
+            {
+
+            }
+            else
+            {
+                out_temp.append(line+"\n");
+            }
+
+        }
+        out_temp.append(e.getId()+","+e.getPersonId()+","+e.getName()+","+e.getLocation()+","+e.getDate()+","+e.getTime());
+        out_temp.flush();
+        while ((line = in_temp.readLine()) != null)
+        {
+            temp_read += (line + "\n");
+        }
+        out_eventRec.write(temp_read);
+        out_eventRec.flush();
+        in_events.close();
+    }
 
 
 }
