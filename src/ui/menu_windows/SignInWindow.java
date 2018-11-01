@@ -3,6 +3,7 @@ package ui.menu_windows;
 import exceptions.*;
 import info.SignIn;
 import info.SignUp;
+import info.User;
 import ui.Window;
 import ui.message_windows.LoginSuccessWindow;
 
@@ -17,7 +18,7 @@ public class SignInWindow extends Window {
     public SignInWindow()
     {
 
-        super("Party Sign-In",new ImageIcon ("src/ui/partyicon.png"),null);
+        super("Party Sign-In",new ImageIcon ("src/ui/partyicon.png"),new User(0,"",""));
     }
 
     public void setPanel()
@@ -99,7 +100,7 @@ public class SignInWindow extends Window {
                 } catch (SignInSuccessfulException e1) {
                     SignInWindow.super.closeWindow();
                     start.setVisible(false);
-                    new LoginSuccessWindow(name.getText());
+                    new LoginSuccessWindow(s.getCurrent_user());
                 }
                 finally {
                     name.setText("");

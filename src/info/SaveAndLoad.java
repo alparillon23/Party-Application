@@ -6,37 +6,25 @@ import java.util.List;
 
 public abstract class SaveAndLoad  {
 
-    protected List<String> nameList;
-    protected List<String> passwordList;
-    protected File nameRecord;
-    protected File passRecord;
-    protected BufferedReader in_name;
-    protected BufferedReader in_pass;
-    protected PrintWriter out_name;
-    protected PrintWriter out_pass;
+    protected List<User> userList;
+    protected User current_user;
+    protected File userRecord;
+    protected BufferedReader in_user;
+    protected PrintWriter out_user;
 
     public SaveAndLoad()
     {
         try {
-            nameList = new ArrayList<>();
-            passwordList = new ArrayList<>();
-            nameRecord = new File("src/info/dataFile/NameRecords.txt");
-            passRecord = new File("src/info/dataFile/PassRecords.txt");
+            userList = new ArrayList<>();
+            userRecord = new File("src/info/dataFile/NameRecords.txt");
             String line = "";
-            in_name = new BufferedReader(new FileReader(nameRecord));
-            in_pass = new BufferedReader(new FileReader(passRecord));
-            while ((line = in_name.readLine()) != null)
+            in_user = new BufferedReader(new FileReader(userRecord));
+            while ((line = in_user.readLine()) != null)
             {
-                nameList.add(line);
-
+                String[] splitLine = line.split(",");
+                userList.add(new User(Integer.parseInt(splitLine[0]),splitLine[1],splitLine[2]));
             }
-            line= "";
-            while ((line = in_pass.readLine()) != null)
-            {
-                passwordList.add(line);
-            }
-            in_name.close();
-            in_pass.close();
+            in_user.close();
 
         }
         catch (IOException e)
@@ -44,5 +32,9 @@ public abstract class SaveAndLoad  {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    public User getCurrent_user() {
+        return current_user;
     }
 }

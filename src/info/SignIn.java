@@ -16,18 +16,31 @@ public class SignIn extends SaveAndLoad{
     public void signIn(String user, String pass)
             throws UserDoesNotExistException, SignInSuccessfulException, PasswordDoesNotMatchException
     {
-        if (nameList.equals(null))
+        int confirm_value = 0;
+        if (userList.equals(null))
         {
             throw new UserDoesNotExistException();
         }
         else {
-            if (nameList.contains(user)) {
-                if (passwordList.get(nameList.indexOf(user)).equals(pass)) {
-                    throw new SignInSuccessfulException();
-                } else {
-                    throw new PasswordDoesNotMatchException();
+            for(User u:userList)
+            {
+                if(u.getUser_Name().equals(user)) {
+                    if (u.pass_Match(user, pass)) {
+                        current_user = u;       //SUCCESSFUL
+                        throw new SignInSuccessfulException();
+                    }
+                }else
+                {
+                    confirm_value = 1;
                 }
-            } else throw new UserDoesNotExistException();
+            }
+            switch (confirm_value) {
+                case 1:
+                    throw new PasswordDoesNotMatchException();
+                default:
+                    throw new UserDoesNotExistException();
+            }
+
         }
     }
 }

@@ -1,18 +1,21 @@
 package ui.menu_windows;
 
+import info.User;
 import ui.Window;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.ImageObserver;
 import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
 
 public class MainMenuWindow extends Window {
 
-    public MainMenuWindow(String user_name)
+    public MainMenuWindow(User user)
     {
-        super("Party Main Menu",new ImageIcon(), user_name);
+        super("Party Main Menu",new ImageIcon(),user);
     }
     @Override
     public void setPanel() {
@@ -52,6 +55,12 @@ public class MainMenuWindow extends Window {
             mainJP.add(jp);
         }
 
+        bt1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
         panel.add(mainJP);
     }
 }

@@ -1,5 +1,6 @@
 package ui.message_windows;
 
+import info.User;
 import ui.Window;
 import ui.menu_windows.MainMenuWindow;
 
@@ -13,7 +14,7 @@ public class LoginSuccessWindow extends Window {
 
 
 
-    public LoginSuccessWindow(String name)
+    public LoginSuccessWindow(User name)
     {
         super("Login Successful",new ImageIcon(new ImageIcon("src/ui/success.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)),name);
 
@@ -45,7 +46,8 @@ public class LoginSuccessWindow extends Window {
             public void actionPerformed(ActionEvent e) {
                 LoginSuccessWindow.super.closeWindow();
                 start.setVisible(false);
-                new MainMenuWindow(perInfo);
+                User m_current_session = current_session;
+                new MainMenuWindow(m_current_session);
             }
         });
 
