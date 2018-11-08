@@ -31,7 +31,7 @@ public class Event {
         for(User u: s.userList)
         {
             if(u.getUser_Id()==user_id)
-            creator = u;
+                creator = u;
         }
         name = name_event;
         location = location_event;
@@ -39,6 +39,10 @@ public class Event {
         time = time_event;
     }
 
+    public void setId(int id)
+    {
+        this.id = id;
+    }
     public void setName(String name_event)
     {
         name = name_event;
@@ -80,6 +84,11 @@ public class Event {
         return time;
     }
 
+    public String eventInformation()
+    {
+        return (id+","+creatorId+","+name+","+location+","+date+","+time);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -92,5 +101,9 @@ public class Event {
     public int hashCode() {
 
         return Objects.hash(id);
+    }
+
+    public void setUser(User user) {
+        this.creator = user;
     }
 }

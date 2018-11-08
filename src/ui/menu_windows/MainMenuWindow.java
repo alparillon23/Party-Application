@@ -7,8 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.ImageObserver;
-import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
 
 public class MainMenuWindow extends Window {
@@ -58,7 +56,9 @@ public class MainMenuWindow extends Window {
         bt1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                MainMenuWindow.super.closeWindow();
+                start.setVisible(false);
+                new NewPartyWindow(current_session);
             }
         });
         panel.add(mainJP);

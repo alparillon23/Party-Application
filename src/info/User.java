@@ -22,20 +22,27 @@ public class User {
         this.eOwned = new HashMap<>();
     }
 
+    public void loadEvents()
+    {
+        EventMaker em = new EventMaker();
+        em.loadEvents(this);
+    }
     public void addEvent(int id, Event e)
     {
         eOwned.put(id,e);
+        e.setUser(this);
     }
 
+    public void removeEvent(Event e)
+    {
+        eOwned.remove(e);
+        e.setUser(null);
+    }
     public void removeEvent(int eventId)
     {
         eOwned.remove(eventId);
     }
 
-    public void removeEvent(Event e)
-    {
-        eOwned.remove(e.getId());
-    }
 
     public void setUser_Id(int user_Id) {
         this.user_Id = user_Id;
@@ -59,6 +66,12 @@ public class User {
 
     public String getUser_Name() {
         return user_Name;
+    }
+
+    public void resetList(HashMap<Integer,Event> events)
+    {
+        eOwned.clear();
+        eOwned = events;
     }
 
     public User getUser(String name)

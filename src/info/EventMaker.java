@@ -3,7 +3,7 @@ package info;
 import java.io.*;
 import java.util.*;
 
-public abstract class EventMaker {
+public class EventMaker {
 
     protected Map<User,HashSet<Event>> userList;
     protected HashSet<Event> allEvents;
@@ -45,30 +45,50 @@ public abstract class EventMaker {
 
     }
 
-    public abstract void setUserList(User user);
 
-    public HashSet<Event> getUserList(User user) {
-        return userList.get(user);
+    public void loadEvents(User user)
+    {
+      HashMap<Integer,Event> userEvents = new HashMap<>();
+      try {
+          eventRecords = new File("src/info/eventFile/EventsRecords.txt");
+          in_events = new BufferedReader(new FileReader(eventRecords));
+          String line = "";
+          while ((line = in_events.readLine()) != null) {
+              String[] splitLine = line.split(",");
+              if(Integer.parseInt(splitLine[1]) == user.getUser_Id())
+                  userEvents.put(Integer.parseInt(splitLine[0]),new Event(Integer.parseInt(splitLine[0]),user,splitLine[2],splitLine[3],splitLine[4],splitLine[5]));
+
+          }
+          user.resetList(userEvents);
+          in_events.close();
+      }
+      catch(IOException e)
+      {
+          e.getMessage();
+      }
     }
 
     //MODIFIES: this, eventRecords.txt
     //EFFECTS: Adds an Event to the List
-    public void addEvent(int userID, String name, String location, String date, String time)
-    {
-       try {
+    public void addEvent(User user, Event event) {
+        try{
+
            eventRecords = new File("src/info/eventFile/EventsRecords.txt");
            in_events = new BufferedReader(new FileReader(eventRecords));
            out_eventRec = new PrintWriter(new FileOutputStream(eventRecords,true));
-           int j = getNewID(in_events);
-           allEvents.add(new Event(j,userID,name,location,date,time));
-           out_eventRec.append(j+","+userID+","+name+","+location+","+date+","+time+"\n");
+           event.setId(getNewID(in_events));
+           user.addEvent(event.getId(),event);
+           allEvents.add(event);
+           out_eventRec.append(event.eventInformation()+"\n");
            out_eventRec.flush();
+           in_events.close();
        }
        catch (IOException er)
        {
            System.out.println(er.getMessage());
        }
     }
+
 
     //EFFECTS: Returns a New ID for Event
     private int getNewID(BufferedReader in_events) throws IOException {//Returns a unique ID that will be used in implementations
@@ -88,6 +108,7 @@ public abstract class EventMaker {
 
     //MODIFIES: this, eventsRecords.txt
     //EFFECT: removes event from list
+    /*
     public void removeEvent(User user, Event event) {
         setUserList(user);
         HashSet<Event> userEvent = getUserList(user);
@@ -129,7 +150,7 @@ public abstract class EventMaker {
         }
     }
 
-/*
+
     public void modifyEventName(int eventID, int userID, String name)
     {
         for (Event e: list)
