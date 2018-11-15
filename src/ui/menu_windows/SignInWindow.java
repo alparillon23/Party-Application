@@ -4,13 +4,16 @@ import exceptions.*;
 import info.SignIn;
 import info.SignUp;
 import info.User;
+import ui.Advertisments;
 import ui.Window;
 import ui.message_windows.LoginSuccessWindow;
+
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 
 public class SignInWindow extends Window {
 
@@ -24,6 +27,7 @@ public class SignInWindow extends Window {
     public void setPanel()
     {
         //super("Party Sign-In",textPane,icon);
+        Advertisments ad = new Advertisments();
 
 
         LayoutManager box = new BoxLayout(panel,BoxLayout.Y_AXIS);
@@ -37,12 +41,17 @@ public class SignInWindow extends Window {
 
         JLabel greeting = new JLabel("<html> <font color='purple' size = 50>WELCOME TO <i>PARTY</i></font><br>" +
                 "<font color='purple' size = 5><i>Meet Up. Chill. And Enjoy.</i></font></html>");
-
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 8;
+        c.gridheight = 4;
+        nameAndPass.add(greeting,c);
 
         JLabel labelName = new JLabel("Name");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
-        c.gridy = 0;
+        c.gridy = 4;
         c.gridwidth = 4;
         nameAndPass.add(labelName,c);
 
@@ -50,7 +59,7 @@ public class SignInWindow extends Window {
         JTextField name = new JTextField(20);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 4;
-        c.gridy = 0;
+        c.gridy = 4;
         name.setMaximumSize(new Dimension(200,10));
         nameAndPass.add(name,c);
 
@@ -58,7 +67,7 @@ public class SignInWindow extends Window {
         JLabel labelPass = new JLabel("Password");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
-        c.gridy = 1;
+        c.gridy = 7;
         c.gridwidth = 4;
         nameAndPass.add(labelPass,c);
 
@@ -66,14 +75,14 @@ public class SignInWindow extends Window {
         pass.setMaximumSize(new Dimension(200,10));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 4;
-        c.gridy = 1;
+        c.gridy = 7;
         name.setMaximumSize(new Dimension(200,10));
         nameAndPass.add(pass,c);
 
         JButton bt = new JButton("Sign In");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy = 9;
         c.ipadx = 4;
         c.gridwidth = 4;
         nameAndPass.add(bt,c);
@@ -81,9 +90,16 @@ public class SignInWindow extends Window {
         JButton bt2 = new JButton("Sign Up");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 6;
-        c.gridy = 2;
+        c.gridy = 9;
         c.gridwidth = 7;
         nameAndPass.add(bt2,c);
+
+        JButton advert = ad.microsoftAd();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 8;
+        c.gridy = 4;
+        c.gridheight = 7;
+        nameAndPass.add(advert,c); //Creates an Ad for P10
 
 
 
@@ -133,7 +149,14 @@ public class SignInWindow extends Window {
             }
         });
 
-        panel.add(greeting);
+        advert.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ad.goMicrosoft();
+            }
+        });
+
+        //panel.add(greeting);
         panel.add(nameAndPass);
         start.setVisible(true);
 

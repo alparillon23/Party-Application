@@ -4,6 +4,12 @@ import java.io.*;
 import java.util.*;
 
 public class EventMaker {
+    //HIGH COUPLING
+    //LOW COHESION
+    //SOLVED THE PROBLEM OF APPLYING CHANGES TO THE PART OF SETS BY COMBINING USER AND EVENT AS PARAMETERS
+    //AND DRAWING THEIR ADD FUNCTIONS IN UNISON
+    //SUBTYPES ARE ALL SUBSTITUTABLE - BUT THIS IS NOT WARRANTED HERE
+    //FIND EVEENTS FROM DOCUMENT, LOADS EVENTS FOR USERS, LOADS ALL EVENTS, ADDS EVENTS
 
     protected Map<User,HashSet<Event>> userList;
     protected HashSet<Event> allEvents;
@@ -45,8 +51,11 @@ public class EventMaker {
 
     }
 
+    public HashSet<Event> getAllEvents() {
+        return allEvents;
+    }
 
-    public void loadEvents(User user)
+    public HashSet<Event> loadEvents(User user)
     {
       HashMap<Integer,Event> userEvents = new HashMap<>();
       try {
@@ -61,10 +70,12 @@ public class EventMaker {
           }
           user.resetList(userEvents);
           in_events.close();
+          return (HashSet<Event>) userEvents.values();
       }
       catch(IOException e)
       {
           e.getMessage();
+          return null;
       }
     }
 
@@ -87,6 +98,56 @@ public class EventMaker {
        {
            System.out.println(er.getMessage());
        }
+    }
+
+    public void removeEvent(User user, Event event) {
+        try{
+            eventRecords = new File("src/info/eventFile/EventsRecords.txt");
+            createList(eventRecords);
+            removeFromList(user,event);
+            updateListDoc(eventRecords);
+        }
+        catch (IOException er)
+        {
+            System.out.println(er.getMessage());
+        }
+
+    }
+
+    private void createList(File eventRecords) throws IOException
+    {
+        in_events = new BufferedReader(new FileReader(eventRecords));
+        String line = "";
+        allEvents.clear();
+        while((line = in_events.readLine()) != null) {
+            String[] splitLine = line.split(",");
+            allEvents.add(new Event(Integer.parseInt(splitLine[0]),Integer.parseInt(splitLine[1]),splitLine[2],splitLine[3],splitLine[4],splitLine[5]));
+        }
+        in_events.close();
+    }
+
+    private void removeFromList(User user, Event event)
+    {
+        for(Event e: allEvents)
+        {
+            if((user.getUser_Id() == e.getCreator().getUser_Id())&&(event.getId()==e.getId()))
+            {
+                allEvents.remove(e);
+                user.removeEvent(event.getId());
+            }
+        }
+    }
+
+    private void updateListDoc(File eventRecords) throws IOException
+    {
+        out_eventRec = new PrintWriter(new FileOutputStream(eventRecords,false));
+        String eventRec = "";
+        for(Event e: allEvents)
+        {
+            eventRec += (e.eventInformation()+"\n");
+        }
+        out_eventRec.write(eventRec);
+        out_eventRec.flush();
     }
 
 

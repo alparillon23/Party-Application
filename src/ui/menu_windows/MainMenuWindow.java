@@ -61,6 +61,15 @@ public class MainMenuWindow extends Window {
                 new NewPartyWindow(current_session);
             }
         });
+
+        bt2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainMenuWindow.super.closeWindow();
+                start.setVisible(false);
+                new EditPartyWindow(current_session);
+                                  } });
+
         panel.add(mainJP);
     }
 }

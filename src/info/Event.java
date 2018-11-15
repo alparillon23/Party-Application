@@ -1,16 +1,21 @@
 package info;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Event {
 
-    private int id; //DON'T MODIFY
+    //HIGH COHESION - DEALS WITH THE EVENT
+    //MODERATE COUPLING - REQUIRES ONLY USER ID OR USER A CHANGE IN THIS
+    //
+    private int id; //MODIFY ONLY ONCE (TO GET THE ID)
     private User creator; //DON'T MODIFY
     private int creatorId; //DON'T MODIFY
     private String name; //MODIFY
     private String location; //MODIFY
     private String date; //MODIFY
     private String time; //MODIFY
+
 
     public Event(int id_event, User user, String name_event, String location_event, String date_event, String time_event)
     {

@@ -35,7 +35,7 @@ public class User {
 
     public void removeEvent(Event e)
     {
-        eOwned.remove(e);
+        eOwned.remove(e.getId());
         e.setUser(null);
     }
     public void removeEvent(int eventId)
