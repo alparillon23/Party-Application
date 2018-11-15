@@ -7,6 +7,6 @@ public interface EventList {
     //EVENTS NEED TO BE LOADED
 
 
-    ArrayList<Event> displayEvents();
+    void displayEvents();
 
 }

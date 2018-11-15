@@ -9,9 +9,10 @@ public class UserEvents implements EventList{
     EventMaker eventMaker; //R/W applet
     ArrayList<Event> createdEvents = new ArrayList<>();
 
-    public UserEvents(User user)
+    public UserEvents(User user,ArrayList<Event> events)
     {
         mainUser = user;
+        createdEvents = events;
     }
 
     public void loadEvent()
@@ -21,10 +22,18 @@ public class UserEvents implements EventList{
             createdEvents.add(e);
         }
     }
-    
+
+    public void addEvent(Event event)
+    {
+        createdEvents.add(event);
+    }
+    public void removeEvent(Event event)
+    {
+        createdEvents.remove(event);
+    }
 
     @Override
-    public ArrayList<Event> displayEvents() {
-        return null;
+    public void displayEvents() {
+        System.out.println("This is a user event: "+this.toString());
     }
 }

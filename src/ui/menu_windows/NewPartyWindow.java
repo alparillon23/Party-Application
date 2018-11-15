@@ -37,7 +37,7 @@ public class NewPartyWindow extends Window {
         addEvent.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                EventMaker em = new EventMaker();
+                EventMaker em = new EventMaker(current_session);
                 Event event = new Event(0,current_session,name.getText(),location.getText(),date.getText(),time.getText());
                 em.addEvent(current_session,event);
                 NewPartyWindow.super.closeWindow();

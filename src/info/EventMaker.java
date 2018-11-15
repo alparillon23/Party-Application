@@ -11,17 +11,24 @@ public class EventMaker {
     //SUBTYPES ARE ALL SUBSTITUTABLE - BUT THIS IS NOT WARRANTED HERE
     //FIND EVEENTS FROM DOCUMENT, LOADS EVENTS FOR USERS, LOADS ALL EVENTS, ADDS EVENTS
 
-    protected Map<User,HashSet<Event>> userList;
+   // protected Map<User,HashSet<Event>> userList;
     protected HashSet<Event> allEvents;
-    //protected int tempEventID;
+    protected User userMain;
     protected File eventRecords;
     protected BufferedReader in_events;
     protected PrintWriter out_eventRec;
-
+    protected EventCollection ec;
+    protected UserEvents ue;
+    protected ArrayList<Integer> userList ;
+    protected ArrayList<Event> eventList ;
+    protected EventCollection evc;
     //MODIFIES: this
-    public EventMaker() //Deals only with User defined Events
+    public EventMaker(User user) //Deals only with User defined Events
     {
-
+        userMain = user;
+        evc = new EventCollection();
+        userList = new ArrayList<>();
+        eventList = new ArrayList<>() ;
         allEvents = new HashSet<>();
         try
         {
@@ -33,15 +40,25 @@ public class EventMaker {
                 //get the lineX
                 //split the lineX
                 String[] splitLine = line.split(",");
-                allEvents.add(new Event(Integer.parseInt(splitLine[0]),Integer.parseInt(splitLine[1]),splitLine[2],splitLine[3],splitLine[4],splitLine[5]));
-                //compare the userID to the ID -> if that's good then we add it to the list
-               // if(Integer.parseInt(splitLine[1])==id) //User ID matches the Events
-               // {
-               //     list.add(new Event(Integer.parseInt(splitLine[0]),Integer.parseInt(splitLine[1]),splitLine[2],splitLine[3],splitLine[4],splitLine[5]));
-               // }
-                //nameList.add(line);
+                Event event = new Event(Integer.parseInt(splitLine[0]),Integer.parseInt(splitLine[1]),splitLine[2],splitLine[3],splitLine[4],splitLine[5]);
+                allEvents.add(event);
+                if(!(userMain.geteOwned().containsKey(event.getId())))
+                {
+                    if(userMain.getUser_Id()== Integer.parseInt(splitLine[1]))
+                    {
+                        userMain.addEvent(Integer.parseInt(splitLine[0]),event);
+                        eventList.add(event);
+                    }
+                }
+                if(!(userList.contains(Integer.parseInt(splitLine[1]))))
+                    userList.add(Integer.parseInt(splitLine[1]));
 
-            }
+
+                }
+
+            ue = new UserEvents(userMain,eventList);
+            evc.addEventList(userMain,ue);
+            evc.displayEvents();
             in_events.close();
         }
         catch(IOException e)
@@ -70,7 +87,9 @@ public class EventMaker {
           }
           user.resetList(userEvents);
           in_events.close();
-          return (HashSet<Event>) userEvents.values();
+          HashSet<Event> userEven = new HashSet<>();
+          userEven.addAll(userEvents.values());
+          return userEven;
       }
       catch(IOException e)
       {

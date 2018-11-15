@@ -42,10 +42,11 @@ public class AddSuccessWindow extends Window {
         bt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                EventMaker em = new EventMaker();
+
                 AddSuccessWindow.super.closeWindow();
                 start.setVisible(false);
                 User m_current_session = current_session;
+                EventMaker em = new EventMaker(m_current_session);
                 em.loadEvents(m_current_session);
                 new MainMenuWindow(m_current_session);
             }

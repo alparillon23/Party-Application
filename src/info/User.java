@@ -24,7 +24,7 @@ public class User {
 
     public void loadEvents()
     {
-        EventMaker em = new EventMaker();
+        EventMaker em = new EventMaker(this);
         em.loadEvents(this);
     }
     public void addEvent(int id, Event e)
@@ -66,6 +66,10 @@ public class User {
 
     public String getUser_Name() {
         return user_Name;
+    }
+
+    public HashMap<Integer, Event> geteOwned() {
+        return eOwned;
     }
 
     public void resetList(HashMap<Integer,Event> events)

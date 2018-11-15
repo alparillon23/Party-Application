@@ -18,6 +18,8 @@ public class EventCollection implements EventList {
     {
        if(!(eventLists.containsKey(user)))
            eventLists.put(user,el);
+       else
+           eventLists.replace(user,el);
     }
 
     public void removeEvent(User user, EventList el)
@@ -31,17 +33,13 @@ public class EventCollection implements EventList {
         return (UserEvents) eventLists.get(user);
     }
     @Override
-    public ArrayList<Event> displayEvents() {
-        ArrayList<UserEvents> ue = new ArrayList<>();
-        ArrayList<Event> events = new ArrayList<>();
+    public void displayEvents() {
+
         for(EventList el: eventLists.values())
         {
-            ue.add((UserEvents) el);
+            System.out.println("This is Event Collection"+el.toString());
+
         }
-        for(UserEvents e: ue)
-        {
-            events.addAll(e.displayEvents());
-        }
-        return events;
+
     }
 }
