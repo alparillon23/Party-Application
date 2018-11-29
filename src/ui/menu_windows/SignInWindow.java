@@ -9,11 +9,13 @@ import ui.Window;
 import ui.message_windows.LoginSuccessWindow;
 
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.io.File;
+import java.util.Random;
 
 public class SignInWindow extends Window {
 
@@ -29,7 +31,22 @@ public class SignInWindow extends Window {
         //super("Party Sign-In",textPane,icon);
         Advertisments ad = new Advertisments();
 
+        try {
+            AudioInputStream stream;
+            AudioFormat format;
+            DataLine.Info info;
+            Clip clip;
 
+            stream = AudioSystem.getAudioInputStream(new File("src/ui/cheer.wav"));
+            format = stream.getFormat();
+            info = new DataLine.Info(Clip.class, format);
+            clip = (Clip) AudioSystem.getLine(info);
+            clip.open(stream);
+            clip.start();
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         LayoutManager box = new BoxLayout(panel,BoxLayout.Y_AXIS);
         panel.setLayout(box);
         JPanel nameAndPass = new JPanel();
@@ -94,7 +111,21 @@ public class SignInWindow extends Window {
         c.gridwidth = 7;
         nameAndPass.add(bt2,c);
 
-        JButton advert = ad.microsoftAd();
+        Random rn = new Random();
+        int adno = rn.nextInt(3);
+        JButton advert;
+        switch(adno)
+        {
+            case 0:
+                advert = ad.microsoftAd();
+                break;
+            case 1:
+                advert = ad.appleAd();
+                break;
+            default:
+                advert = ad.dellAd();
+        }
+
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 8;
         c.gridy = 4;
@@ -152,7 +183,17 @@ public class SignInWindow extends Window {
         advert.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ad.goMicrosoft();
+                switch(adno)
+                {
+                    case 0:
+                        ad.goMicrosoft();
+                        break;
+                    case 1:
+                        ad.goApple();
+                        break;
+                    default:
+                        ad.goDell();
+                }
             }
         });
 

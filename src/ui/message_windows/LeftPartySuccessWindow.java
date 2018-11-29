@@ -3,6 +3,7 @@ package ui.message_windows;
 import info.User;
 import ui.Window;
 import ui.menu_windows.MainMenuWindow;
+import ui.menu_windows.YourPartiesWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,24 +11,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class LoginSuccessWindow extends Window {
+public class LeftPartySuccessWindow extends Window {
 
-
-
-    public LoginSuccessWindow(User name)
+    public LeftPartySuccessWindow(User user)
     {
-        super("Login Successful",new ImageIcon(new ImageIcon("src/ui/success.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)),name);
-
+        super("Left the Party",new ImageIcon(new ImageIcon("src/ui/success.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)),user);
     }
     @Override
     public void setPanel() {
-
         panel.setLayout(new FlowLayout());
         ArrayList<JPanel> messageArea = new ArrayList<>();
         JPanel centre = new JPanel(new GridLayout(2,1));
         //messageArea.setLayout(new GridLayout(2,1));
 
-        JLabel message = new JLabel("Welcome to PARTY, "+perInfo+"! Enjoy the party and connect with new and old friends!");
+        JLabel message = new JLabel("You have left the party successfully");
         JButton bt = new JButton("Continue");
 
         for(int i=0; i<2; i++)
@@ -45,10 +42,10 @@ public class LoginSuccessWindow extends Window {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                LoginSuccessWindow.super.closeWindow();
+                LeftPartySuccessWindow.super.closeWindow();
                 start.setVisible(false);
                 User m_current_session = current_session;
-                new MainMenuWindow(m_current_session);
+                new YourPartiesWindow(m_current_session);
             }
         });
 

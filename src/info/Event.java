@@ -17,18 +17,17 @@ public class Event {
     private String time; //MODIFY
 
 
-    public Event(int id_event, User user, String name_event, String location_event, String date_event, String time_event)
+    public Event(int id_event, int user, String name_event, String location_event, String date_event, String time_event)
     {
         id = id_event;
-        creator = user;
-        creatorId = user.getUser_Id();
+        creatorId = user;
         name = name_event;
         location = location_event;
         date = date_event;
         time = time_event;
     }
 
-    public Event(int id_event, int user_id, String name_event, String location_event, String date_event, String time_event)
+  /*  public Event(int id_event, int user_id, String name_event, String location_event, String date_event, String time_event)
     {
         id = id_event;
         creatorId = id;
@@ -43,7 +42,7 @@ public class Event {
         date = date_event;
         time = time_event;
     }
-
+*/
     public void setId(int id)
     {
         this.id = id;
@@ -71,6 +70,10 @@ public class Event {
     public User getCreator()
     {
         return creator;
+    }
+    public int getCreatorId()
+    {
+        return creatorId;
     }
     public String getName()
     {

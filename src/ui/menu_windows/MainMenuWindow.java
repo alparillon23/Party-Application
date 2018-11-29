@@ -2,6 +2,7 @@ package ui.menu_windows;
 
 import info.User;
 import ui.Window;
+import ui.message_windows.LeftPartySuccessWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,7 +42,7 @@ public class MainMenuWindow extends Window {
         jps.get(4).add(bt4);
         JButton bt5 = new JButton("<html><h3>Find a Party</h3></html>");
         jps.get(5).add(bt5);
-        JButton bt6 = new JButton("<html><h3>Shut Down Your Party</h3></html>");
+        JButton bt6 = new JButton("<html><h3>Your Parties</h3></html>");
         jps.get(6).add(bt6);
         JButton bt7 = new JButton("<html><h3>Sign Out of <i>Party</i></h3></html>");
         jps.get(7).add(bt7);
@@ -69,6 +70,33 @@ public class MainMenuWindow extends Window {
                 start.setVisible(false);
                 new EditPartyWindow(current_session);
                                   } });
+
+        bt5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainMenuWindow.super.closeWindow();
+                start.setVisible(false);
+                new FindPartiesWindow(current_session);
+            }
+        });
+
+        bt6.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainMenuWindow.super.closeWindow();
+                start.setVisible(false);
+                new YourPartiesWindow(current_session);
+            }
+        });
+
+        bt7.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainMenuWindow.super.closeWindow();
+                start.setVisible(false);
+                new SignInWindow();
+            }
+        });
 
         panel.add(mainJP);
     }

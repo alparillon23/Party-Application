@@ -10,7 +10,9 @@ public class User {
     private int user_Id;
     private String user_Name;
     private String user_Pass;
-    private HashMap<Integer,Event> eOwned;
+    private EventsJoined eventsJoined;
+    private EventsOwned eventsOwned;
+
 
     //TODO: Add profile information object as more customization is allowed
 
@@ -19,30 +21,45 @@ public class User {
         this.user_Id = user_Id;
         this.user_Name = user_Name;
         this.user_Pass = user_Pass;
-        this.eOwned = new HashMap<>();
+        eventsJoined = new EventsJoined(user_Id);
+        eventsOwned = new EventsOwned(user_Id);
     }
 
-    public void loadEvents()
-    {
-        EventMaker em = new EventMaker(this);
-        em.loadEvents(this);
-    }
-    public void addEvent(int id, Event e)
-    {
-        eOwned.put(id,e);
-        e.setUser(this);
-    }
 
+    public void addEvent(Event e)
+    {
+       eventsOwned.addEvent(user_Id,e);
+       eventsOwned.refresh();
+    }
     public void removeEvent(Event e)
     {
-        eOwned.remove(e.getId());
-        e.setUser(null);
+        eventsOwned.removeEvent(user_Id,e);
+        eventsOwned.refresh();
     }
-    public void removeEvent(int eventId)
+    public void editEvent(Event e)
     {
-        eOwned.remove(eventId);
+        eventsOwned.editEvent(user_Id,e);
+        eventsOwned.refresh();
+    }
+    public void joinEvent(Event e)
+    {
+        eventsJoined.joinEvent(user_Id,e);
+        eventsJoined.rewriteGuests();
     }
 
+    public void unJoinEvent(Event e)
+    {
+        eventsJoined.unJoinEvent(user_Id,e);
+        eventsJoined.rewriteGuests();
+    }
+
+    public EventsJoined getEventsJoined() {
+        return eventsJoined;
+    }
+
+    public EventsOwned getEventsOwned() {
+        return eventsOwned;
+    }
 
     public void setUser_Id(int user_Id) {
         this.user_Id = user_Id;
@@ -68,15 +85,26 @@ public class User {
         return user_Name;
     }
 
-    public HashMap<Integer, Event> geteOwned() {
-        return eOwned;
+    public ArrayList<Event> getOwnersList()
+    {
+        ArrayList<Event> ev = new ArrayList<>();
+        for(Event e: eventsOwned)
+        {
+            ev.add(e);
+        }
+        return ev;
     }
 
-    public void resetList(HashMap<Integer,Event> events)
+    public ArrayList<Event> getJoinedList()
     {
-        eOwned.clear();
-        eOwned = events;
+        ArrayList<Event> ev = new ArrayList<>();
+        for(Event e: eventsJoined)
+        {
+            ev.add(e);
+        }
+        return ev;
     }
+
 
     public User getUser(String name)
     {

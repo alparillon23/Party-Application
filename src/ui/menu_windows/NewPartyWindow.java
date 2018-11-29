@@ -1,6 +1,5 @@
 package ui.menu_windows;
 
-import info.EventMaker;
 import info.User;
 import info.Event;
 import ui.Window;
@@ -37,9 +36,8 @@ public class NewPartyWindow extends Window {
         addEvent.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                EventMaker em = new EventMaker(current_session);
-                Event event = new Event(0,current_session,name.getText(),location.getText(),date.getText(),time.getText());
-                em.addEvent(current_session,event);
+                Event event = new Event(0,current_session.getUser_Id(),name.getText(),location.getText(),date.getText(),time.getText());
+                current_session.addEvent(event);
                 NewPartyWindow.super.closeWindow();
                 start.setVisible(false);
                 new AddSuccessWindow(current_session);

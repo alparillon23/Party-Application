@@ -1,10 +1,9 @@
 package ui.menu_windows;
 
-import info.User;
 import info.Event;
+import info.User;
 import ui.Window;
-import ui.message_windows.EditSuccessWindow;
-import ui.message_windows.RemoveSuccessWindow;
+import ui.message_windows.LeftPartySuccessWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,14 +11,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class EditPartyWindow extends Window {
+public class YourPartiesWindow extends Window {
 
-    private int value;
-    public EditPartyWindow(User user)
+    int value;
+
+    public YourPartiesWindow(User user)
     {
-        super("Change Up The Party",new ImageIcon(),user);
+        super("All Your Parties",new ImageIcon(),user);
     }
-
     @Override
     public void setPanel() {
 
@@ -36,9 +35,23 @@ public class EditPartyWindow extends Window {
         JLabel locationlabel = new JLabel("Location");  JTextField location = new JTextField(20); location.setMaximumSize(new Dimension(200,10));
         JLabel datelabel = new JLabel("Date"); JTextField date = new JTextField(20); date.setMaximumSize(new Dimension(200,10));
         JLabel timelabel = new JLabel("Time"); JTextField time = new JTextField(20); time.setMaximumSize(new Dimension(200,10));
-        JButton editEvent = new JButton("Edit Party"); JButton removeEvent = new JButton("Delete Party"); JButton cancelEditEvent = new JButton("Cancel");
+        JButton unjoinEvent = new JButton("Attend Event"); JButton viewChat = new JButton("View Chat(coming soon)"); JButton cancel = new JButton("Cancel");
 
-        ArrayList<Event> events = current_session.getOwnersList();
+        name.setEditable(false);
+        location.setEditable(false);
+        date.setEditable(false);
+        time.setEditable(false);
+
+        ArrayList<Event> events = new ArrayList<>();
+        for(Event e: current_session.getEventsJoined())
+        {
+            events.add(e);
+        }
+        for(Event e: current_session.getEventsOwned())
+        {
+            events.add(e);
+        }
+
 
         if(events.size()!=0) {
             value = 0;
@@ -119,19 +132,19 @@ public class EditPartyWindow extends Window {
         gbc.gridx = 0;
         gbc.gridy = 6;
         gbc.gridwidth = 2;
-        grid.add(editEvent,gbc);
+        grid.add(unjoinEvent,gbc);
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 3;
         gbc.gridy = 6;
         gbc.gridwidth = 2;
-        grid.add(removeEvent,gbc);
+        grid.add(viewChat,gbc);
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 5;
         gbc.gridy = 6;
         //gbc.gridwidth = 3;
-        grid.add(cancelEditEvent,gbc);
+        grid.add(cancel,gbc);
 
         panel.add(grid);
 
@@ -139,24 +152,24 @@ public class EditPartyWindow extends Window {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(events.size()!=0){
-                if(value != (events.size() - 1))
-                {
-                    value++;
-                    //Show information
-                    name.setText(events.get(value).getName());
-                    location.setText(events.get(value).getLocation());
-                    date.setText(events.get(value).getDate());
-                    time.setText(events.get(value).getTime());
-                }
-                else
-                {
-                    value = 0;
-                    //Show information
-                    name.setText(events.get(value).getName());
-                    location.setText(events.get(value).getLocation());
-                    date.setText(events.get(value).getDate());
-                    time.setText(events.get(value).getTime());
-                }}
+                    if(value != (events.size() - 1))
+                    {
+                        value++;
+                        //Show information
+                        name.setText(events.get(value).getName());
+                        location.setText(events.get(value).getLocation());
+                        date.setText(events.get(value).getDate());
+                        time.setText(events.get(value).getTime());
+                    }
+                    else
+                    {
+                        value = 0;
+                        //Show information
+                        name.setText(events.get(value).getName());
+                        location.setText(events.get(value).getLocation());
+                        date.setText(events.get(value).getDate());
+                        time.setText(events.get(value).getTime());
+                    }}
 
             }
         });
@@ -165,61 +178,54 @@ public class EditPartyWindow extends Window {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(events.size()!=0){
-                if(value == 0)
-                {
-                    value = events.size() -1;
-                    //Show information
-                    name.setText(events.get(value).getName());
-                    location.setText(events.get(value).getLocation());
-                    date.setText(events.get(value).getDate());
-                    time.setText(events.get(value).getTime());
-                }
-                else
-                {
-                    value--;
-                    //Show information
-                    name.setText(events.get(value).getName());
-                    location.setText(events.get(value).getLocation());
-                    date.setText(events.get(value).getDate());
-                    time.setText(events.get(value).getTime());
-                }}
+                    if(value == 0)
+                    {
+                        value = events.size() -1;
+                        //Show information
+                        name.setText(events.get(value).getName());
+                        location.setText(events.get(value).getLocation());
+                        date.setText(events.get(value).getDate());
+                        time.setText(events.get(value).getTime());
+                    }
+                    else
+                    {
+                        value--;
+                        //Show information
+                        name.setText(events.get(value).getName());
+                        location.setText(events.get(value).getLocation());
+                        date.setText(events.get(value).getDate());
+                        time.setText(events.get(value).getTime());
+                    }}
 
             }
         });
 
-        editEvent.addActionListener(new ActionListener() {
+        unjoinEvent.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(events.size()!=0)
                 {
                     Event newEvent = new Event(events.get(value).getId(),current_session.getUser_Id(),name.getText(),location.getText(),date.getText(),time.getText());
-                    current_session.editEvent(newEvent);
-                    events.set(value,newEvent);
-                    EditPartyWindow.super.closeWindow();
+                    current_session.unJoinEvent(newEvent);
+                    YourPartiesWindow.super.closeWindow();
                     start.setVisible(false);
-                    new EditSuccessWindow(current_session);
+                    new LeftPartySuccessWindow(current_session);
                 }
 
             }
         });
 
-        removeEvent.addActionListener(new ActionListener() {
+        viewChat.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(events.size()!=0) {
-                    current_session.removeEvent(events.get(value));
-                    //events.remove(value);
-                    EditPartyWindow.super.closeWindow();
-                    start.setVisible(false);
-                    new RemoveSuccessWindow(current_session);
-                }
+
             }
         });
 
-        cancelEditEvent.addActionListener(new ActionListener() {
+        cancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                EditPartyWindow.super.closeWindow();
+                YourPartiesWindow.super.closeWindow();
                 start.setVisible(false);
                 new MainMenuWindow(current_session);
             }

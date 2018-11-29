@@ -1,6 +1,5 @@
 package ui.message_windows;
 
-import info.EventMaker;
 import info.User;
 import ui.Window;
 import ui.menu_windows.MainMenuWindow;
@@ -46,8 +45,6 @@ public class AddSuccessWindow extends Window {
                 AddSuccessWindow.super.closeWindow();
                 start.setVisible(false);
                 User m_current_session = current_session;
-                EventMaker em = new EventMaker(m_current_session);
-                em.loadEvents(m_current_session);
                 new MainMenuWindow(m_current_session);
             }
         });
