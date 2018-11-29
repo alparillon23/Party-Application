@@ -35,7 +35,7 @@ public class YourPartiesWindow extends Window {
         JLabel locationlabel = new JLabel("Location");  JTextField location = new JTextField(20); location.setMaximumSize(new Dimension(200,10));
         JLabel datelabel = new JLabel("Date"); JTextField date = new JTextField(20); date.setMaximumSize(new Dimension(200,10));
         JLabel timelabel = new JLabel("Time"); JTextField time = new JTextField(20); time.setMaximumSize(new Dimension(200,10));
-        JButton unjoinEvent = new JButton("Attend Event"); JButton viewChat = new JButton("View Chat(coming soon)"); JButton cancel = new JButton("Cancel");
+        JButton unjoinEvent = new JButton("Leave Event"); JButton viewChat = new JButton("View Chat(coming soon)"); JButton cancel = new JButton("Cancel");
 
         name.setEditable(false);
         location.setEditable(false);

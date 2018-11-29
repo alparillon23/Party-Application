@@ -1,4 +1,5 @@
 4733,5543,10210 Party Bash,24 West Avenue,5th December 2019,3:00pm
 5537,5543,Frat at the Beach,Wreck Beach,12th December 2019,2:00pm
 3564,9664,Bob Ross Painting Exhibition,New Westminister Avenue,13th June 2019,4:00pm
-6447,5543,New Party Fete,Victoria Island,13th December 2019,9:00pm
+8951,5543,New Beach Bash ,Vancouver ,24th December 2019,5:00pm
+6447,5543,New DayTime Festival,Victoria Island,13th December 2019,9:00pm
